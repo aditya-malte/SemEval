@@ -3,9 +3,12 @@ import string
 import emoji 
     
 def preprocess(text, punct=True):
+    
     #separate the external url
     url = None
-    processed_text, url = (processed_text.split("â€¦ /") if "â€¦ /" in processed_text)
+    processed_text, _, url = processed_text.partition("â€¦ /")
+    if(url!=None)
+        url = "".join(url.split())
     
     #remove urls
     processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
