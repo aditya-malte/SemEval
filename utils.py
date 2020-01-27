@@ -6,7 +6,7 @@ def preprocess(text, punct=True):
     
     #separate the external url
     url = None
-    processed_text, _, url = text.partition("â€¦ /")
+    processed_text, _, url = text.partition("…")
     if(url!=''):
         url = "".join(url.split())
     else:
