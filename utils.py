@@ -25,6 +25,7 @@ class PreProcess:
         processed_text, _, url = text.partition("…")
         if(url!=''):
             url = "".join(url.split())
+            url = "https://t.co/" + url.rsplit('/', 1)[-1]
         else:
             url=None
       
