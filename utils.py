@@ -4,7 +4,7 @@ import emoji
     
 def preprocess(text, punct=True):
     #separate the external url
-    
+    url = None
     processed_text, url = (processed_text.split("â€¦ /") if "â€¦ /" in processed_text)
     
     #remove urls
