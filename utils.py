@@ -21,8 +21,7 @@ class PreProcess:
 
   def preprocess(self, text="blank"):
       
-      #separate the external url
-      
+      #separate the external url 
       if(self.sep_url):
         url = None
         processed_text, _, url = text.partition("…")
@@ -34,7 +33,7 @@ class PreProcess:
       
       #remove urls in text
       if(self.remove_url):
-        processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
+        processed_text = re.sub("http\S+", "", processed_text, flags=re.MULTILINE)
     
 
       #handle hashtags and usernames
