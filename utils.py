@@ -16,7 +16,7 @@ class PreProcess:
     if(self.convert_emoji):
       import emoji
 
-  def preprocess(self, text):
+  def preprocess(self, text="blank"):
       
       #separate the external url
       
