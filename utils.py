@@ -3,6 +3,10 @@ import string
 import emoji 
     
 def preprocess(text, punct=True):
+    #separate the external url
+    
+    processed_text, url = (processed_text.split("â€¦ /") if "â€¦ /" in processed_text)
+    
     #remove urls
     processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
    
@@ -49,7 +53,7 @@ def preprocess(text, punct=True):
     processed_text = processed_text.replace("QSDWDSrfefafawecsd", "\n")
     
     
-    return processed_text.lower()
+    return processed_text.lower(), url
 
 
 print(preprocess("CHECK @out this123!!! \n u`??rl https://stackoverflow.com/questions/11331982/how-to-remove-any-url-within-a-string-in-python my car another 😅urlhttps://codereview.stackexchange.com/questions/186614/text-cleaning-script-producing-lowercase-words-with-minimal-punctuation"))
