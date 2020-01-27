@@ -1,6 +1,6 @@
 import re
 import string
-
+import emoji
 class PreProcess:
   def __init__(self, remove_punct=False, sep_url=True, remove_url=True,
                remove_hashtag=False,remove_usertag=False,remove_no=True, lowercase=False,
