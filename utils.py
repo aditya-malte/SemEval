@@ -7,8 +7,10 @@ def preprocess(text, punct=True):
     #separate the external url
     url = None
     processed_text, _, url = processed_text.partition("â€¦ /")
-    if(url!=None)
+    if(url!=''):
         url = "".join(url.split())
+    else:
+        url=None
     
     #remove urls
     processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
