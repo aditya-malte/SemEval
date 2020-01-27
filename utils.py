@@ -36,7 +36,7 @@ class PreProcess:
       #handle hashtags and usernames
       if(self.remove_hashtag):
         processed_text = re.sub("#", "", processed_text)
-      if(remove_usertag):
+      if(self.remove_usertag):
         processed_text = re.sub("@", "", processed_text)
       
       
