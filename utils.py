@@ -1,67 +1,89 @@
 import re
 import string
-import emoji 
-    
-def preprocess(text, punct=True):
-    
-    #separate the external url
-    url = None
-    processed_text, _, url = text.partition("…")
-    if(url!=''):
-        url = "".join(url.split())
-    else:
-        url=None
-    
-    #remove urls
-    processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
-   
 
-    #handle hashtags and usernames
-    processed_text = re.sub("#", "", processed_text)
-    processed_text = re.sub("@", "", processed_text)
-    
-    
-    
-    #remove repeated punctuations
-    if(punct):
-        for punctuation in string.punctuation:
-            while True:
-                replaced =  processed_text.replace(punctuation * 2, punctuation)
-                if replaced == processed_text:
-                    break
-                processed_text = replaced
+class PreProcess:
+  def __init__(self, remove_punct=False, sep_url=True, remove_url=True,
+               remove_hashtag=False,remove_usertag=False,remove_no=True, lowercase=False,
+               convert_emoji=True):
+    self.remove_punct = remove_punct
+    self.sep_url = sep_url
+    self.remove_url = remove_url
+    self.remove_hashtag = remove_hashtag
+    self.remove_usertag = remove_usertag
+    self.remove_no = remove_no
+    self.lowercase = lowercase
+    self.convert_emoji = convert_emoji
+    if(self.convert_emoji):
+      import emoji
 
+  def preprocess(self, text):
+      
+      #separate the external url
+      
+      if(self.sep_url):
+        url = None
+        processed_text, _, url = text.partition("…")
+        if(url!=''):
+            url = "".join(url.split())
+        else:
+            url=None
+      
+      #remove urls in text
+      if(self.remove_url):
+        processed_text = re.sub("http\S+", "", text, flags=re.MULTILINE)
     
-    
-    #tokenize punctuations
-    """
-    for punctuation in string.punctuation:
-        processed_text =  processed_text.replace(punctuation, " " + punctuation+ " ")
-    """ 
-    
-    
-    #remove numbers
-    processed_text = re.sub("\d+", "", processed_text)
-    
-    
-    
-    #convert emojis
-    processed_text = emoji.demojize(processed_text)
-    
-    
-    
-    #convert multiple whitespaces to single
-    #detect newline and replace with random string
-    processed_text = processed_text.replace("\n", "QSDWDSrfefafawecsd")
-    processed_text = re.sub("\s\s+", " ", processed_text)
-    #replace again with newline
-    processed_text = processed_text.replace("QSDWDSrfefafawecsd", "\n")
-    
-    #Convert to lower case
-    processed_text = processed_text.lower()
-    
-    return (processed_text, url)
+
+      #handle hashtags and usernames
+      if(self.remove_hashtag):
+        processed_text = re.sub("#", "", processed_text)
+      if(remove_usertag):
+        processed_text = re.sub("@", "", processed_text)
+      
+      
+      
+      #remove repeated punctuations
+      if(self.remove_punct):
+          for punctuation in string.punctuation:
+              while True:
+                  replaced =  processed_text.replace(punctuation * 2, punctuation)
+                  if replaced == processed_text:
+                      break
+                  processed_text = replaced
+
+      
+      
+      #tokenize punctuations
+      """
+      for punctuation in string.punctuation:
+          processed_text =  processed_text.replace(punctuation, " " + punctuation+ " ")
+      """ 
+      
+      
+      #remove numbers
+      if(self.remove_no):
+        processed_text = re.sub("\d+", "", processed_text)
+      
+      
+      
+      #convert emojis
+      if(self.convert_emoji):
+        processed_text = emoji.demojize(processed_text)
+      
+      
+      
+      #convert multiple whitespaces to single
+      #detect newline and replace with random string
+      processed_text = processed_text.replace("\n", "QSDWDSrfefafawecsd")
+      processed_text = re.sub("\s\s+", " ", processed_text)
+      #replace again with newline
+      processed_text = processed_text.replace("QSDWDSrfefafawecsd", "\n")
+      
+      #Convert to lower case
+      if(self.lowercase):   
+        processed_text = processed_text.lower()
+      
+      return (processed_text, url)
 
 
-print(preprocess("CHECK @out this123!!! \n u`??rl https://stackoverflow.com/questions/11331982/how-to-remove-any-url-within-a-string-in-python my car another 😅urlhttps://codereview.stackexchange.com/questions/186614/text-cleaning-script-producing-lowercase-words-with-minimal-punctuation"))
-print(preprocess("Check out this #url!!???"))
+  print(preprocess("CHECK @out this123!!! \n u`??rl https://stackoverflow.com/questions/11331982/how-to-remove-any-url-within-a-string-in-python my car another 😅urlhttps://codereview.stackexchange.com/questions/186614/text-cleaning-script-producing-lowercase-words-with-minimal-punctuation"))
+  print(preprocess("Check out this #url!!???"))
