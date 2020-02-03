@@ -356,16 +356,19 @@ class SentimixProcessor(DataProcessor):
         """Creates examples for the training and dev sets."""
         examples = []
         for (i, line) in enumerate(lines):
-            if i == 0:
-                continue
-            guid = "%s-%s" % (set_type, i)
-            text_a = line[0]
-            if set_type == 'test':
-                label = "1"
-            else:
-                label = line[1]
-            examples.append(InputExample(
-                guid=guid, text_a=text_a, text_b=None, label=label))
+            try:
+                if i == 0:
+                    continue
+                guid = "%s-%s" % (set_type, i)
+                text_a = line[0]
+                if set_type == 'test':
+                    label = "1"
+                else:
+                    label = line[1]
+                examples.append(InputExample(
+                    guid=guid, text_a=text_a, text_b=None, label=label))
+             except Exception as e:
+                raise("Error:",e," at ",line)
         return examples
 
 class StsbProcessor(DataProcessor):
