@@ -86,6 +86,9 @@ class PreProcess:
       if(self.lowercase):   
         processed_text = processed_text.lower()
       
+      if(processed_text == ""):
+        processed_text = "blank"
+      
       if self.sep_url:
         return (processed_text, url)
       else:
