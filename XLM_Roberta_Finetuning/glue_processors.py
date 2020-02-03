@@ -368,7 +368,8 @@ class SentimixProcessor(DataProcessor):
                 examples.append(InputExample(
                     guid=guid, text_a=text_a, text_b=None, label=label))
             except Exception as e:
-                raise("Error:",e," at ",line)
+                print("Error:",e," at ",line)
+                raise
         return examples
 
 class StsbProcessor(DataProcessor):
