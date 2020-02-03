@@ -94,5 +94,5 @@ class PreProcess:
           return (processed_text, url)
         else:
           return processed_text
-      catch:
-        print("Error at: ", text)
+      except Exception as e:
+        print("Error at: ", text, "--",e)
