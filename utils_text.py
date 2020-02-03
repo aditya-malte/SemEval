@@ -19,7 +19,8 @@ class PreProcess:
     if(self.convert_emoji):
       import emoji
 
-  def preprocess(self, text="blank"):
+  def preprocess(self, text=""):
+      processed_text = text
       
       #separate the external url 
       if(self.sep_url):
@@ -85,4 +86,7 @@ class PreProcess:
       if(self.lowercase):   
         processed_text = processed_text.lower()
       
-      return (processed_text, url)
+      if self.sep_url:
+        return (processed_text, url)
+      else:
+        return processed_text
