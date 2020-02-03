@@ -7,7 +7,7 @@ except:
 class PreProcess:
   def __init__(self, remove_punct=False, sep_url=True, remove_url=True,
                remove_hashtag=False,remove_usertag=False,remove_no=True, lowercase=False,
-               convert_emoji=True):
+               convert_emoji=True, solve_gaps=True):
     self.remove_punct = remove_punct
     self.sep_url = sep_url
     self.remove_url = remove_url
@@ -16,6 +16,7 @@ class PreProcess:
     self.remove_no = remove_no
     self.lowercase = lowercase
     self.convert_emoji = convert_emoji
+    self.solve_gaps = solve_gaps
     if(self.convert_emoji):
       import emoji
 
@@ -89,7 +90,11 @@ class PreProcess:
 
         if(processed_text == ""):
           processed_text = "blank"
-
+        
+        #breaks the lang labels:
+        if(self.solve_gaps):
+          processed_text = processed_text.replace("@ ", "@").replace(" _ ", "_")
+        
         if self.sep_url:
           return (processed_text, url)
         else:
