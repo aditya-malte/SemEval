@@ -7,7 +7,7 @@ except:
 class PreProcess:
   def __init__(self, remove_punct=False, sep_url=True, remove_url=True,
                remove_hashtag=False,remove_usertag=False,remove_no=True, lowercase=False,
-               convert_emoji=True, solve_gaps=True):
+               convert_emoji=True, solve_gaps=True, remove_newline=True):
     self.remove_punct = remove_punct
     self.sep_url = sep_url
     self.remove_url = remove_url
@@ -15,6 +15,7 @@ class PreProcess:
     self.remove_usertag = remove_usertag
     self.remove_no = remove_no
     self.lowercase = lowercase
+    self.remove_newline = remove_newline
     self.convert_emoji = convert_emoji
     self.solve_gaps = solve_gaps
     if(self.convert_emoji):
@@ -37,7 +38,10 @@ class PreProcess:
         #remove urls in text
         if(self.remove_url):
           processed_text = re.sub("http\S+", "", processed_text, flags=re.MULTILINE)
-
+        
+        #remove all newlines
+        if(self.remove_newline):
+          processed_text = processed_text.replace("\n", " ")
 
         #handle hashtags and usernames
         if(self.remove_hashtag):
