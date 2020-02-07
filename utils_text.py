@@ -1,3 +1,4 @@
+import requests
 import re
 import string
 try:
@@ -101,3 +102,16 @@ class PreProcess:
           return processed_text
       except Exception as e:
         print("Error at: ", text, "--",e)
+
+
+def clean_for_transliterate(text):
+  text = re.sub(r"[#~]", "", text)
+  #add for !!!!!! -> !
+  return text.replace(' ’ ', '\'').replace(' .', '.')
+
+
+def transliterate(text):
+  try:
+    return (requests.get(f"https://www.google.com/inputtools/request?text={text}&ime=transliteration_en_hi")).json()[1][0][1][0]
+  except:
+    return text
